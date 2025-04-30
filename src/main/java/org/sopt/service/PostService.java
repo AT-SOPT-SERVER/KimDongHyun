@@ -16,14 +16,18 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    // 게시물 생성
-    public Post createPost(Long userId, String title, String content){
+    // 게시물 생성: 게시물의 제목은 중복 불가능
+    public Post createPost(Long userId, String title, String content) {
+        if (postRepository.existsByTitle(title)) {
+            throw new IllegalArgumentException("이미 존재하는 제목입니다. 다른 제목을 입력해주세요.");
+        }
         Post post = new Post(userId, title, content);
         return postRepository.save(post);
     }
 
     // 모든 게시물 조회
     public List<Post> getAllPosts() {
+
         return postRepository.findAll();
     }
 
@@ -49,7 +53,7 @@ public class PostService {
     }
 
     // 게시글 내용 수정
-    public boolean updatePostContent(Long id, String newContent){
+    public boolean updatePostContent(Long id, String newContent) {
         Post post = postRepository.findById(id).orElse(null);
         post.updateContent(newContent);
         postRepository.save(post);
