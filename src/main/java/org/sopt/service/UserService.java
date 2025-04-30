@@ -18,8 +18,12 @@ public class UserService {
     }
 
     // 새로운 사용자 생성
-    public User createUser(String name){
+    public User createUser(String userName){
+        if(userName == null || userName.isBlank()){
+            throw new IllegalArgumentException("이름은 필수입니다.");
+        }
         User user = new User();
+        user.setUsername(userName);
         return userRepository.save(user);
     }
 

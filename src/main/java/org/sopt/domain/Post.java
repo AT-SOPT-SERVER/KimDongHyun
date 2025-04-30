@@ -2,14 +2,15 @@ package org.sopt.domain;
 
 import jakarta.persistence.*;
 
-import javax.swing.text.StringContent;
-
 @Entity
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
+    private Long userId;
 
     @Column(nullable = false, length = 30)
     private String title;
@@ -19,20 +20,16 @@ public class Post {
 
     public Post() {}
 
-    public Post(String title) {
-        validateTitle(title); // 제목 검증
-        this.title = title;
-    }
-
-    public Post(String title, String content) {
+    public Post(Long userId, String title, String content) {
         validateTitle(title); // 제목 검증
         validateContent(content);
+        this.userId = userId;
         this.title = title;
         this.content = content;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserIdId() {
+        return userId;
     }
 
     public String getTitle() {
@@ -51,7 +48,7 @@ public class Post {
 
     // 내용 검증 메서드
     private void validateContent(String content){
-        if(content.trim().isEmpty()){
+        if(content == null || content.trim().isEmpty()){
             throw new IllegalArgumentException("내용은 필수입니다. 내용이 비어 있는 경우에는 게시글 작성이 되지 않습니다.");
         }
         if(content.length() > 1000){

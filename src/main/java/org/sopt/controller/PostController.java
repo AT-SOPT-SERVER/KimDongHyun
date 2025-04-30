@@ -1,8 +1,11 @@
 package org.sopt.controller;
 
+import org.sopt.domain.User;
 import org.sopt.dto.PostRequest;
+import org.sopt.dto.UserRequest;
 import org.sopt.service.PostService;
 import org.sopt.domain.Post;
+import org.sopt.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +21,13 @@ public class PostController {
         this.postService = postService;
     }
 
-    // 게시물 생성
+    // 게시물 생성 -> 게시물 생성시 userId를 반환
     @PostMapping
-    public ResponseEntity<?> createPost(@RequestBody PostRequest request) {
+    public ResponseEntity<?> createPost(
+            @RequestHeader Long userId,
+            @RequestBody PostRequest request) {
         try {
-            Post post = postService.createPost(request.title());
+            Post post = postService.createPost(userId, request.title(), request.content());
             return ResponseEntity.ok(post);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

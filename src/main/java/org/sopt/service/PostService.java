@@ -17,8 +17,8 @@ public class PostService {
     }
 
     // 게시물 생성
-    public Post createPost(String title){
-        Post post = new Post(title);
+    public Post createPost(Long userId, String title, String content){
+        Post post = new Post(userId, title, content);
         return postRepository.save(post);
     }
 

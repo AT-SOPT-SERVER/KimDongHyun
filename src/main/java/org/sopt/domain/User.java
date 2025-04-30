@@ -23,9 +23,10 @@ public class User {
         return name;
     }
 
-    public User(String name){
-        validateName(name);
-        this.name = name;
+    public User(Long userId, String userName){
+        validateName(userName);
+        this.id = userId;
+        this.name = userName;
     }
 
     private void validateName(String name){
@@ -40,5 +41,9 @@ public class User {
     public void updateUser(String newName){
         validateName(newName);
         this.name = newName;
+    }
+
+    public void setUsername(String userName) {
+        this.name = userName;
     }
 }
