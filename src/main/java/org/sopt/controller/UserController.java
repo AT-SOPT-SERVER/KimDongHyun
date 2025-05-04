@@ -32,6 +32,4 @@ public class UserController {
         User updateUser = userService.updateUsername(id, request.userName());
         return ResponseEntity.ok(updateUser.getName());
     }
-
 }
-

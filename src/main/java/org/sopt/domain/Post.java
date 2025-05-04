@@ -42,7 +42,7 @@ public class Post {
 
     // 제목 검증 메서드
     private void validateTitle(String title) {
-        if (title == null || title.trim().isEmpty()) {
+        if (title.isBlank()) {
             throw new IllegalArgumentException("제목은 필수입니다! 제목을 입력헤주세요^^");
         }
         if (title.length() > 30) {
@@ -52,7 +52,7 @@ public class Post {
 
     // 내용 검증 메서드
     private void validateContent(String content){
-        if(content == null || content.trim().isEmpty()){
+        if(content.isBlank()){
             throw new IllegalArgumentException("내용은 필수입니다. 내용이 비어 있는 경우에는 게시글 작성이 되지 않습니다.");
         }
         if(content.length() > 1000){

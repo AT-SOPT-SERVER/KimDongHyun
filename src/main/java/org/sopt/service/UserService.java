@@ -43,7 +43,7 @@ public class UserService {
     }
 
     // 사용자 이름 업데이트
-    public User updateUsername(Long id, String newName){
+    public User updateUsername(Long id, String newName) {
         User user = getUserIdById(id);
         user.updateUser(newName);
         return userRepository.save(user);
