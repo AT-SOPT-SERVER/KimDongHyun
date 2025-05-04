@@ -1,11 +1,9 @@
 package org.sopt.controller;
 
-import org.sopt.domain.User;
-import org.sopt.dto.PostRequest;
-import org.sopt.dto.UserRequest;
+import org.sopt.dto.request.PostRequest;
+import org.sopt.dto.response.ApiResponse;
 import org.sopt.service.PostService;
 import org.sopt.domain.Post;
-import org.sopt.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,16 +21,13 @@ public class PostController {
 
     // 게시물 생성 -> 게시물 생성시 userId를 반환
     @PostMapping
-    public ResponseEntity<?> createPost(
+    public ResponseEntity<ApiResponse<Post>> createPost(
             @RequestHeader Long userId,
             @RequestBody PostRequest request) {
-        try {
-            Post post = postService.createPost(userId, request.title(), request.content());
-            return ResponseEntity.ok(post);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        Post post = postService.createPost(userId, request.title(), request.content());
+        return ResponseEntity.ok(new ApiResponse<>(true, post, null));
     }
+
 
     // 모든 게시물 조회
     @GetMapping
@@ -43,7 +38,7 @@ public class PostController {
 
     // 게시물 ID로 조회
     @GetMapping("/{id}")
-    public ResponseEntity<?> getPostById(@PathVariable Long id) {
+    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
         return postService.getPostById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -51,22 +46,18 @@ public class PostController {
 
     // 게시물 제목 수정
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updatePostTitle(@PathVariable Long id, @RequestBody PostRequest request) {
-        try {
-            boolean updated = postService.updatePostTitle(id, request.title());
-            if (updated) {
-                return ResponseEntity.ok().build();
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+    public ResponseEntity<String> updatePostTitle(@PathVariable Long id, @RequestBody PostRequest request) {
+        boolean updated = postService.updatePostTitle(id, request.title());
+        if (updated) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 
     // 게시물 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePost(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         boolean deleted = postService.deletePostById(id);
         if (deleted) {
             return ResponseEntity.noContent().build();

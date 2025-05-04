@@ -2,13 +2,10 @@ package org.sopt.controller;
 
 
 import org.sopt.domain.User;
-import org.sopt.dto.UserRequest;
+import org.sopt.dto.request.UserRequest;
 import org.sopt.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -22,12 +19,8 @@ public class UserController {
 
     // 회원 가입
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody UserRequest request) {
-        try {
-            User user = userService.createUser(request.userName());
-            return ResponseEntity.ok(user.getId());
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<Long> createUser(@RequestBody UserRequest request) {
+        User user = userService.createUser(request.userName());
+        return ResponseEntity.ok(user.getId());
     }
 }

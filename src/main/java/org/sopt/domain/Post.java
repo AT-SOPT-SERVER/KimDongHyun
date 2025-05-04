@@ -36,6 +36,10 @@ public class Post {
         return title;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     // 제목 검증 메서드
     private void validateTitle(String title) {
         if (title == null || title.trim().isEmpty()) {
