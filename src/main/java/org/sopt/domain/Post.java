@@ -9,6 +9,10 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(nullable = false)
     private Long userId;
 
@@ -20,16 +24,16 @@ public class Post {
 
     public Post() {}
 
-    public Post(Long userId, String title, String content) {
+    public Post(User user, String title, String content) {
         validateTitle(title); // 제목 검증
         validateContent(content);
-        this.userId = userId;
+        this.user = user;
         this.title = title;
         this.content = content;
     }
 
-    public Long getUserIdId() {
-        return userId;
+    public User user() {
+        return user;
     }
 
     public String getTitle() {

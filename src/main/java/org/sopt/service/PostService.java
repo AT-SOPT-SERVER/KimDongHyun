@@ -1,7 +1,9 @@
 package org.sopt.service;
 
 import org.sopt.domain.Post;
+import org.sopt.domain.User;
 import org.sopt.repository.PostRepository;
+import org.sopt.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,11 @@ import java.util.Optional;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     // 게시물 생성: 게시물의 제목은 중복 불가능
@@ -21,7 +25,9 @@ public class PostService {
         if (postRepository.existsByTitle(title)) {
             throw new IllegalArgumentException("이미 존재하는 제목입니다. 다른 제목을 입력해주세요.");
         }
-        Post post = new Post(userId, title, content);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+        Post post = new Post(user, title, content);
         return postRepository.save(post);
     }
 

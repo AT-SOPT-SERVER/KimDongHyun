@@ -23,7 +23,7 @@ public class UserService {
             throw new IllegalArgumentException("이름은 필수입니다.");
         }
         User user = new User();
-        user.setUsername(userName);
+        user.setName(userName);
         return userRepository.save(user);
     }
 
@@ -45,7 +45,7 @@ public class UserService {
     // 사용자 이름 수정
     public User updateUsername(Long id, String newName) {
         User user = getUserIdById(id);
-        user.updateUser(newName);
+        user.setName(newName);
         return userRepository.save(user);
     }
 

@@ -15,18 +15,17 @@ public class User {
     public User() {
     }
 
+    public User(String userName) {
+        validateName(userName);
+        this.name = userName;
+    }
+
     public Long getId() {
         return id;
     }
 
     public String getName() {
         return name;
-    }
-
-    public User(Long userId, String userName) {
-        validateName(userName);
-        this.id = userId;
-        this.name = userName;
     }
 
     private void validateName(String name) {
@@ -38,12 +37,8 @@ public class User {
         }
     }
 
-    public void updateUser(String newName) {
+    public void setName(String newName) {
         validateName(newName);
         this.name = newName;
-    }
-
-    public void setUsername(String userName) {
-        this.name = userName;
     }
 }

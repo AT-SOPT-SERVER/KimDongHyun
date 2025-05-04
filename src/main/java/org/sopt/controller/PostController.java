@@ -1,5 +1,6 @@
 package org.sopt.controller;
 
+import org.sopt.domain.User;
 import org.sopt.dto.request.PostRequest;
 import org.sopt.dto.response.ApiResponse;
 import org.sopt.service.PostService;
