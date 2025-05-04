@@ -42,6 +42,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    // 사용자 이름 업데이트
+    public User updateUsername(Long id, String newName){
+        User user = getUserIdById(id);
+        user.updateUser(newName);
+        return userRepository.save(user);
+    }
+
     // 사용자 삭제
     public void deleteUser(Long id) {
         userRepository.deleteById(id);

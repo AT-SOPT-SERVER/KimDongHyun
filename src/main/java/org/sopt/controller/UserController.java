@@ -23,4 +23,15 @@ public class UserController {
         User user = userService.createUser(request.userName());
         return ResponseEntity.ok(user.getId());
     }
+
+    // 이름 변경 시
+    @PatchMapping
+    public ResponseEntity<String> updateUserName(
+            @PathVariable Long id,
+            @RequestBody UserRequest request) {
+        User updateUser = userService.updateUsername(id, request.userName());
+        return ResponseEntity.ok(updateUser.getName());
+    }
+
 }
+
