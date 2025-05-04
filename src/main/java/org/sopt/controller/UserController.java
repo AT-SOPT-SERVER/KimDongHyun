@@ -7,6 +7,8 @@ import org.sopt.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -31,5 +33,19 @@ public class UserController {
             @RequestBody UserRequest request) {
         User updateUser = userService.updateUsername(id, request.userName());
         return ResponseEntity.ok(updateUser.getName());
+    }
+
+    // 사용자 삭제 시
+    @DeleteMapping
+    private ResponseEntity<Long> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // 전체회원 조회
+    @GetMapping
+    private ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 }

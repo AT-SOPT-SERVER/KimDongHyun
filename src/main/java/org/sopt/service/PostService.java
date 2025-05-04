@@ -37,36 +37,24 @@ public class PostService {
     }
 
     // 게시글 제목 수정
-    public boolean updatePostTitle(Long id, String newTitle) {
-        Post post = postRepository.findById(id).orElse(null);
-        if (post == null) {
-            return false; // 해당 ID의 게시물이 없을 경우
-        }
-
-        try {
-            post.updateTitle(newTitle); // 도메인 객체의 메서드로 제목 수정
-            postRepository.save(post);  // DB에 저장
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false; // 유효성 검증에서 실패한 경우
-        }
+    public void updatePostTitle(Long id, String newTitle) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id: " + id));
+        post.updateTitle(newTitle);
+        postRepository.save(post);
     }
 
     // 게시글 내용 수정
-    public boolean updatePostContent(Long id, String newContent) {
-        Post post = postRepository.findById(id).orElse(null);
+    public void updatePostContent(Long id, String newContent) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id: " + id));
         post.updateContent(newContent);
         postRepository.save(post);
-
-        return true;
     }
 
     // 게시물 삭제
-    public boolean deletePostById(Long id) {
-        if (postRepository.existsById(id)) {
-            postRepository.deleteById(id);
-            return true;
+    public void deletePostById(Long id) {
+        if (!postRepository.existsById(id)) {
+            throw new IllegalArgumentException("해당 게시물이 없습니다. id: " + id);
         }
-        return false;
+        postRepository.deleteById(id);
     }
 }

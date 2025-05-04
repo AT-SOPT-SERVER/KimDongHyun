@@ -28,7 +28,6 @@ public class PostController {
         return ResponseEntity.ok(new ApiResponse<>(true, post, null));
     }
 
-
     // 모든 게시물 조회
     @GetMapping
     public ResponseEntity<List<Post>> getAllPosts() {
@@ -47,21 +46,21 @@ public class PostController {
     // 게시물 제목 수정
     @PatchMapping("/{id}")
     public ResponseEntity<String> updatePostTitle(@PathVariable Long id, @RequestBody PostRequest request) {
-        boolean updated = postService.updatePostTitle(id, request.title());
-        if (updated) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        postService.updatePostTitle(id, request.title());
+        return ResponseEntity.ok().build();
+    }
+
+    // 게시물 내용 수정
+    @PatchMapping("/{id}/content")
+    public ResponseEntity<String> updatePostContent(@PathVariable Long id, @RequestBody PostRequest request) {
+        postService.updatePostContent(id, request.content());
+        return ResponseEntity.ok().build();
     }
 
     // 게시물 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
-        boolean deleted = postService.deletePostById(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        postService.deletePostById(id);
+        return ResponseEntity.noContent().build();
     }
 }

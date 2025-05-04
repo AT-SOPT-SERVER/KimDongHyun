@@ -42,7 +42,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    // 사용자 이름 업데이트
+    // 사용자 이름 수정
     public User updateUsername(Long id, String newName) {
         User user = getUserIdById(id);
         user.updateUser(newName);
@@ -51,6 +51,9 @@ public class UserService {
 
     // 사용자 삭제
     public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("해당하는 사용자가 없습니다. id: " + id);
+        }
         userRepository.deleteById(id);
     }
 }
