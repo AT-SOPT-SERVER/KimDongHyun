@@ -1,8 +1,8 @@
 package org.sopt.controller;
 
-import org.sopt.domain.User;
 import org.sopt.dto.request.PostRequest;
 import org.sopt.dto.response.ApiResponse;
+import org.sopt.dto.response.PostResponse;
 import org.sopt.service.PostService;
 import org.sopt.domain.Post;
 import org.springframework.http.ResponseEntity;
@@ -38,23 +38,24 @@ public class PostController {
 
     // 게시물 ID로 조회
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getPostById(@PathVariable Long id) {
+    public ResponseEntity<PostResponse> getPostById(@PathVariable Long id) {
         Post post = postService.getPostById(id);
-        return ResponseEntity.ok(post);
+        PostResponse response = new PostResponse(post);
+        return ResponseEntity.ok(response);
     }
 
     // 게시물 제목 수정
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updatePostTitle(@PathVariable Long id, @RequestBody PostRequest request) {
-        postService.updatePostTitle(id, request.title());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PostResponse> updatePostTitle(@PathVariable Long id, @RequestBody PostRequest request) {
+        Post post = postService.updatePostTitle(id, request.title());
+        return ResponseEntity.ok(new PostResponse(post));
     }
 
     // 게시물 내용 수정
     @PatchMapping("/{id}/content")
-    public ResponseEntity<String> updatePostContent(@PathVariable Long id, @RequestBody PostRequest request) {
-        postService.updatePostContent(id, request.content());
-        return ResponseEntity.ok().build();
+    public ResponseEntity<PostResponse> updatePostContent(@PathVariable Long id, @RequestBody PostRequest request) {
+        Post post = postService.updatePostContent(id, request.content());
+        return ResponseEntity.ok(new PostResponse(post));
     }
 
     // 게시물 삭제

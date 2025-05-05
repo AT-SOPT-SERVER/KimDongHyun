@@ -7,7 +7,6 @@ import org.sopt.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PostService {
@@ -45,17 +44,19 @@ public class PostService {
 
 
     // 게시글 제목 수정
-    public void updatePostTitle(Long id, String newTitle) {
+    public Post updatePostTitle(Long id, String newTitle) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
         post.updateTitle(newTitle);
         postRepository.save(post);
+        return post;
     }
 
     // 게시글 내용 수정
-    public void updatePostContent(Long id, String newContent) {
+    public Post updatePostContent(Long id, String newContent) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id"));
         post.updateContent(newContent);
         postRepository.save(post);
+        return post;
     }
 
     // 게시물 삭제
