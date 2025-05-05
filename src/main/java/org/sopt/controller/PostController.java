@@ -39,9 +39,8 @@ public class PostController {
     // 게시물 ID로 조회
     @GetMapping("/{id}")
     public ResponseEntity<Post> getPostById(@PathVariable Long id) {
-        return postService.getPostById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Post post = postService.getPostById(id);
+        return ResponseEntity.ok(post);
     }
 
     // 게시물 제목 수정

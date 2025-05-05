@@ -38,20 +38,22 @@ public class PostService {
     }
 
     // 게시물 ID로 조회
-    public Optional<Post> getPostById(Long id) {
-        return postRepository.findById(id);
+    public Post getPostById(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 ID가 없습니다."));
     }
+
 
     // 게시글 제목 수정
     public void updatePostTitle(Long id, String newTitle) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id: " + id));
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다."));
         post.updateTitle(newTitle);
         postRepository.save(post);
     }
 
     // 게시글 내용 수정
     public void updatePostContent(Long id, String newContent) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id: " + id));
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id"));
         post.updateContent(newContent);
         postRepository.save(post);
     }
@@ -59,7 +61,7 @@ public class PostService {
     // 게시물 삭제
     public void deletePostById(Long id) {
         if (!postRepository.existsById(id)) {
-            throw new IllegalArgumentException("해당 게시물이 없습니다. id: " + id);
+            throw new IllegalArgumentException("해당 게시물이 없습니다.");
         }
         postRepository.deleteById(id);
     }
