@@ -22,7 +22,8 @@ public class Post {
     @Column(nullable = false, length = 1000)
     private String content;
 
-    public Post() {}
+    public Post() {
+    }
 
     public Post(User user, String title, String content) {
         validateTitle(title); // 제목 검증
@@ -55,11 +56,11 @@ public class Post {
     }
 
     // 내용 검증 메서드
-    private void validateContent(String content){
-        if(content.isBlank()){
+    private void validateContent(String content) {
+        if (content.isBlank()) {
             throw new IllegalArgumentException("내용은 필수입니다. 내용이 비어 있는 경우에는 게시글 작성이 되지 않습니다.");
         }
-        if(content.length() > 1000){
+        if (content.length() > 1000) {
             throw new IllegalArgumentException("내용은 1000자를 넘을 수 없어요!");
         }
     }
@@ -71,7 +72,7 @@ public class Post {
     }
 
     // 게시글 내용 수정 메서드
-    public void updateContent(String updatedContent){
+    public void updateContent(String updatedContent) {
         validateContent(updatedContent);
         this.content = updatedContent;
     }

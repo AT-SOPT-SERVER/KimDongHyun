@@ -1,6 +1,8 @@
 package org.sopt.controller;
 
 import org.sopt.dto.request.PostRequest;
+import org.sopt.dto.request.UpdatePostContentRequest;
+import org.sopt.dto.request.UpdatePostTitleRequest;
 import org.sopt.dto.response.ApiResponse;
 import org.sopt.dto.response.PostResponse;
 import org.sopt.service.PostService;
@@ -45,15 +47,17 @@ public class PostController {
     }
 
     // 게시물 제목 수정
-    @PatchMapping("/{id}")
-    public ResponseEntity<PostResponse> updatePostTitle(@PathVariable Long id, @RequestBody PostRequest request) {
+    @PatchMapping("/{id}/title")
+    public ResponseEntity<PostResponse> updatePostTitle(
+            @PathVariable Long id, @RequestBody UpdatePostTitleRequest request) {
         Post post = postService.updatePostTitle(id, request.title());
         return ResponseEntity.ok(new PostResponse(post));
     }
 
     // 게시물 내용 수정
     @PatchMapping("/{id}/content")
-    public ResponseEntity<PostResponse> updatePostContent(@PathVariable Long id, @RequestBody PostRequest request) {
+    public ResponseEntity<PostResponse> updatePostContent(
+            @PathVariable Long id, @RequestBody UpdatePostContentRequest request) {
         Post post = postService.updatePostContent(id, request.content());
         return ResponseEntity.ok(new PostResponse(post));
     }
