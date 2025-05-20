@@ -46,7 +46,7 @@ public class CommentService {
     // 삭제
     public void deleteComment(Long id) {
         if (!commentRepository.existsById(id)) {
-            throw new IllegalArgumentException("존재하지 않는 댓글입니다."));
+            throw new IllegalArgumentException("존재하지 않는 댓글입니다.");
         }
         commentRepository.deleteById(id);
     }
