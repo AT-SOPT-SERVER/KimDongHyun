@@ -5,6 +5,8 @@ import org.sopt.domain.Post;
 import org.sopt.domain.User;
 import org.springframework.core.io.ClassPathResource;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class Comment {
 
@@ -22,6 +24,9 @@ public class Comment {
 
     @Column(nullable = false, length = 300)
     private String content;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     protected Comment(){}
 
@@ -59,5 +64,9 @@ public class Comment {
 
     public String getContent() {
         return content;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }
