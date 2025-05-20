@@ -13,9 +13,6 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
-    private Long userId;
-
     @Column(nullable = false, length = 30)
     private String title;
 
