@@ -27,7 +27,7 @@ public class CommentController {
             @PathVariable Long postId,
             @RequestBody CommentRequest request
     ) {
-        Comment comment = commentService.createComment(postId, request.user(), request.content());
+        Comment comment = commentService.createComment(postId, request.userId(), request.content());
         return ResponseEntity.ok(
                 new ApiResponse<>(true, new CommentResponse(comment), null)
         );
