@@ -34,9 +34,10 @@ public class LikeController {
     // 좋아요 취소하기
     @DeleteMapping("/posts/{postId}/likes/{likeId}")
     public ResponseEntity<ApiResponse<Void>> unlikePost(
-            @PathVariable Long likeId
+            @PathVariable Long postId,
+            @RequestParam Long userId
     ) {
-        likeService.deletePostLike();
+        likeService.deletePostLike(postId, userId);
         return ResponseEntity.ok(new ApiResponse<>(true, null, null));
     }
 }

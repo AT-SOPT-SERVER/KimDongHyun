@@ -36,8 +36,8 @@ public class LikeService {
     }
 
 
-    // 게시글 좋아요 삭제
-    public void deletePostLike() {
+    // 게시글 좋아요 삭제x
+    public void deletePostLike(Long postId, Long userId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 게시글이 없습니다. id=" + postId));
 
