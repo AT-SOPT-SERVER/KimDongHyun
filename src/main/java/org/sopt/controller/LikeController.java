@@ -1,9 +1,7 @@
 package org.sopt.controller;
 
 import org.sopt.domain.Like;
-import org.sopt.domain.Post;
 import org.sopt.dto.request.LikeRequest;
-import org.sopt.dto.request.PostRequest;
 import org.sopt.dto.response.ApiResponse;
 import org.sopt.dto.response.LikeResponse;
 import org.sopt.service.LikeService;
@@ -26,7 +24,7 @@ public class LikeController {
             @PathVariable Long postId,
             @RequestBody LikeRequest request
     ) {
-        Like like = likeService.createCommentLike(postId, request.userId());
+        Like like = likeService.createPostLike(postId, request.userId());
         LikeResponse data = new LikeResponse(like);
         return ResponseEntity
                 .ok(new ApiResponse<>(true, new LikeResponse(like), null
@@ -36,10 +34,9 @@ public class LikeController {
     // 좋아요 취소하기
     @DeleteMapping("/posts/{postId}/likes/{likeId}")
     public ResponseEntity<ApiResponse<Void>> unlikePost(
-            @PathVariable Long postId,
             @PathVariable Long likeId
     ) {
-        likeService.deleteLike(likeId);
+        likeService.deletePostLike();
         return ResponseEntity.ok(new ApiResponse<>(true, null, null));
     }
 }

@@ -73,4 +73,8 @@ public class Post {
         validateContent(updatedContent);
         this.content = updatedContent;
     }
+
+    public Long getId() {
+        return this.id;
+    }
 }
