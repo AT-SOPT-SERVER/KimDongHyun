@@ -3,6 +3,7 @@ package org.sopt.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "USERS")
 public class User {
 
     @Id
