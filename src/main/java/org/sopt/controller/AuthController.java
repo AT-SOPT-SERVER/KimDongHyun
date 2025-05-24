@@ -3,10 +3,14 @@ package org.sopt.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.sopt.domain.User;
+import org.sopt.dto.response.UserResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.StandardCharsets;
@@ -65,5 +69,20 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("쿠키가 없습니다.");
         }
         return ResponseEntity.ok("받은 쿠키 → 유저 아이디: " + userId + ", 패스워드: " + password);
+    }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login2(HttpServletRequest request) {
+        String userId = "userSopt";
+        String password = "sopt1234";
+
+        if (userId.equals("userSopt") && password.equals("sopt1234")) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", new User("soptUser"));
+            return ResponseEntity.ok("세션 저장 완료");
+        }
+
+        throw new RuntimeException("로그인 실패");
     }
 }
